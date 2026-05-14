@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>英語が生まれた5日間</title>
+<title>英語史を歩く5都市 — A Journey Through the History of English</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600;700&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,381 +15,418 @@
     --ink:     #1a1830;
     --ink2:    #4b5563;
     --ink3:    #9ca3af;
-    --gold:    #d97706;
-    --goldbg:  #fef3c7;
-    --accent:  #4f46e5;
-    --acbg:    #eef2ff;
-    --green:   #059669;
-    --greenbg: #ecfdf5;
-    --border:  #e5e3dc;
+    --line:    #e5e3dc;
+    --line2:   #efede6;
+    --gold:    #b45309;
+    --era-oe:  #7c3aed;
+    --era-on:  #1e40af;
+    --era-me:  #0d9488;
+    --era-en:  #b45309;
   }
 
   html, body {
     width: 100%; height: 100%; overflow: hidden;
-    background: var(--bg); font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--ink);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
   }
 
   .deck { width: 100vw; height: 100vh; position: relative; }
 
   .slide {
     position: absolute; inset: 0;
-    opacity: 0; transform: translateX(60px);
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0; transform: translateX(40px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
     pointer-events: none; overflow: hidden;
+    background: var(--bg);
   }
-  .slide.active  { opacity: 1; transform: translateX(0); pointer-events: all; }
-  .slide.exit    { opacity: 0; transform: translateX(-60px); }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
+  .slide.exit   { opacity: 0; transform: translateX(-40px); }
 
-  /* ── Nav UI ── */
+  /* ── Nav ── */
   .progress {
     position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 8px; z-index: 300;
+    display: flex; gap: 6px; z-index: 300;
   }
   .dot {
-    width: 6px; height: 6px; border-radius: 50%;
+    width: 5px; height: 5px; border-radius: 50%;
     background: rgba(0,0,0,0.18); transition: all 0.3s; cursor: pointer;
   }
-  .dot.active { width: 24px; border-radius: 3px; background: var(--gold); }
+  .dot.active { width: 20px; border-radius: 3px; background: var(--gold); }
   .nav-btn {
     position: fixed; bottom: 18px;
-    background: var(--ink); border: none;
-    color: #fff; width: 44px; height: 44px; border-radius: 50%;
+    background: transparent; border: 1px solid var(--line);
+    color: var(--ink); width: 36px; height: 36px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 300; transition: all 0.2s; font-size: 16px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    cursor: pointer; z-index: 300; transition: all 0.2s; font-size: 14px;
   }
-  .nav-btn:hover { background: var(--accent); }
-  .nav-btn.prev { right: 100px; }
+  .nav-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .nav-btn.prev { right: 96px; }
   .nav-btn.next { right: 48px; }
   .slide-num {
-    position: fixed; top: 20px; right: 28px;
+    position: fixed; top: 24px; right: 32px;
     font-family: 'Inter', sans-serif; font-size: 11px;
     color: var(--ink3); letter-spacing: 0.1em; z-index: 300;
   }
 
-  /* ── EYEBROW (共通) ── */
+  /* ── Shared typography ── */
   .eyebrow {
     font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
-    display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    margin-bottom: 18px;
   }
-  .eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); border-radius: 2px; }
+  .h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900; line-height: 1.1; color: var(--ink);
+  }
+  .lead {
+    font-size: 13px; color: var(--ink2); line-height: 1.85;
+  }
 
-  /* ══════════════════════════════
-     SLIDE 1 — タイトル
-  ══════════════════════════════ */
+  .echip {
+    display: inline-block;
+    font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 3px;
+  }
+  .echip.oe { color: var(--era-oe); background: rgba(124,58,237,0.10); }
+  .echip.on { color: var(--era-on); background: rgba(30,64,175,0.10); }
+  .echip.me { color: var(--era-me); background: rgba(13,148,136,0.10); }
+  .echip.en { color: var(--era-en); background: rgba(180,83,9,0.10); }
+
+  /* ══════════ SLIDE 1 ══════════ */
   #s1 { display: grid; grid-template-columns: 1fr 1fr; }
 
-  .s1-photo { position: relative; overflow: hidden; }
-  .s1-photo img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
-  .s1-photo::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(to right, transparent 60%, rgba(248,246,242,0.18) 100%);
+  .s1-left {
+    background: #efece4;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    padding: 60px;
   }
-  .s1-photo-label {
-    position: absolute; bottom: 20px; left: 20px; z-index: 2;
-    font-family: 'Inter', sans-serif; font-size: 10px;
-    color: rgba(255,255,255,0.8); letter-spacing: 0.1em;
-    background: rgba(0,0,0,0.35); padding: 4px 12px; border-radius: 100px;
-    backdrop-filter: blur(6px);
-  }
+  .s1-left svg { width: 100%; max-width: 360px; height: auto; }
 
-  .s1-content {
-    background: var(--bg);
+  .s1-right {
+    padding: 88px 80px;
     display: flex; flex-direction: column; justify-content: center;
-    padding: 40px 52px;
-    position: relative; overflow: hidden;
   }
-  .s1-content::before {
-    content: ''; position: absolute; top: -80px; right: -80px;
-    width: 300px; height: 300px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(217,119,6,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .s1-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 54px; font-weight: 900; line-height: 1.1;
-    color: var(--ink); margin-bottom: 10px;
-  }
-  .s1-title .gold { color: var(--gold); }
-
+  .s1-h1 { font-size: 44px; margin-bottom: 8px; }
+  .s1-h1 .gold { color: var(--gold); }
   .s1-sub {
-    font-size: 13px; font-weight: 300; color: var(--ink2);
-    line-height: 1.85; margin-bottom: 28px;
+    font-size: 13px; color: var(--ink2);
+    margin-bottom: 40px; line-height: 1.7;
   }
 
-  .s1-stats { display: flex; gap: 32px; margin-bottom: 28px; }
-  .stat-num {
-    font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800;
-    color: var(--ink); line-height: 1;
+  .s1-meta {
+    display: flex; gap: 36px;
+    padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
   }
-  .stat-label { font-size: 10px; color: var(--ink3); margin-top: 4px; }
-
-  .route-card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 14px; padding: 16px 20px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-  .route-card-title {
+  .s1-meta div .label {
     font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700;
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink3);
-    margin-bottom: 10px;
-  }
-  .route-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 5px 0; border-bottom: 1px solid var(--border);
-    font-size: 12px;
-  }
-  .route-row:last-child { border-bottom: none; }
-  .route-day { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; color: var(--gold); width: 30px; }
-  .route-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-  .route-place { color: var(--ink); font-weight: 700; flex: 1; }
-  .route-note { color: var(--ink3); font-size: 10px; }
-
-  /* ══════════════════════════════
-     SLIDE 2 — フック
-  ══════════════════════════════ */
-  #s2 {
-    background: var(--bg);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 60px; text-align: center;
-    position: relative; overflow: hidden;
-  }
-  #s2::before {
-    content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-    width: 500px; height: 500px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(217,119,6,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .h-tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--acbg); border: 1px solid rgba(79,70,229,0.25);
-    color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
-    text-transform: uppercase; padding: 6px 18px; border-radius: 100px;
-    margin-bottom: 24px; font-family: 'Inter', sans-serif;
-  }
-
-  .big-q {
-    font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 900;
-    color: var(--ink); line-height: 1.18; margin-bottom: 36px;
-  }
-
-  .quiz-box {
-    background: var(--goldbg); border: 1px solid rgba(217,119,6,0.25);
-    border-radius: 20px; padding: 32px 60px; margin-bottom: 32px;
-    max-width: 580px;
-  }
-  .quiz-label { font-size: 12px; color: var(--ink2); margin-bottom: 10px; }
-  .quiz-word {
-    font-family: 'Playfair Display', serif; font-size: 80px; font-weight: 900;
-    color: var(--gold); line-height: 1; margin-bottom: 10px;
-  }
-  .quiz-ans { font-size: 13px; color: var(--ink2); line-height: 1.75; }
-
-  .word-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .chip {
-    background: var(--acbg); border: 1px solid rgba(79,70,229,0.2);
-    border-radius: 100px; padding: 8px 20px;
-    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; color: var(--accent);
-  }
-
-  /* ══════════════════════════════
-     SLIDE 3 & 4 — スポット
-  ══════════════════════════════ */
-  #s3, #s4 {
-    background: var(--bg);
-    display: grid;
-    grid-template-rows: auto 1fr;
-  }
-
-  .spots-header {
-    padding: 28px 48px 20px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg2);
-  }
-  .spots-section-label {
-    font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700;
-    letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink3);
     margin-bottom: 4px;
   }
-  .spots-section-title {
-    font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--ink);
+  .s1-meta div .val {
+    font-size: 13px; font-weight: 700; color: var(--ink);
   }
 
-  .spots-grid {
+  .s1-route {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .s1-route .row {
+    display: grid; grid-template-columns: 18px 18px 1fr auto;
+    align-items: center; gap: 14px;
+    font-size: 12.5px;
+  }
+  .s1-route .num {
+    font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700;
+    color: var(--ink3); width: 18px;
+  }
+  .s1-route .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--ink3); border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .s1-route .row.r1 .dot { background: var(--era-oe); }
+  .s1-route .row.r2 .dot { background: var(--era-on); }
+  .s1-route .row.r3 .dot { background: var(--era-me); }
+  .s1-route .row.r4 .dot { background: var(--era-en); }
+  .s1-route .place { color: var(--ink); font-weight: 700; }
+  .s1-route .era {
+    font-family: 'Inter', sans-serif; font-size: 10px;
+    color: var(--ink3); letter-spacing: 0.04em;
+  }
+
+  /* ══════════ SLIDE 2 ══════════ */
+  #s2 {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 88px 120px;
+  }
+  .s2-title { font-size: 36px; margin-bottom: 56px; max-width: 760px; }
+
+  .tl {
+    margin-bottom: 56px;
+  }
+  .tl-bar {
+    display: flex; height: 10px; border-radius: 2px; overflow: hidden;
+  }
+  .tl-bar .seg { background: var(--era-oe); }
+  .tl-bar .seg.s1 { background: var(--era-oe); flex: 13; }
+  .tl-bar .seg.s2 { background: var(--era-on); flex: 5; }
+  .tl-bar .seg.s3 { background: var(--era-me); flex: 4; }
+  .tl-bar .seg.s4 { background: var(--era-en); flex: 5; }
+
+  .tl-labels {
+    display: grid; grid-template-columns: 13fr 5fr 4fr 5fr;
+    margin-top: 12px;
+  }
+  .tl-labels div { padding-right: 16px; }
+  .tl-labels .y {
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700;
+    color: var(--ink); letter-spacing: 0.04em;
+  }
+  .tl-labels .n {
+    font-family: 'Inter', sans-serif; font-size: 10px; color: var(--ink3);
+    margin-top: 2px;
+  }
+
+  .s2-quiz {
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 56px; align-items: center;
+  }
+  .quiz-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 110px; font-weight: 900; color: var(--gold);
+    line-height: 0.9;
+  }
+  .quiz-q {
+    font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700;
+    color: var(--ink3); letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .quiz-ans {
+    font-size: 15px; color: var(--ink); line-height: 1.85; font-weight: 400;
+  }
+  .quiz-ans b { color: var(--era-on); font-weight: 700; }
+
+  /* ══════════ SLIDE 3 & 4 (city pair) ══════════ */
+  .city-pair {
+    display: grid; grid-template-rows: auto 1fr;
+  }
+  .city-header {
+    padding: 56px 80px 32px;
+  }
+  .city-section-eyebrow {
+    font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .city-section-title {
+    font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 900;
+    color: var(--ink); line-height: 1.15;
+  }
+  .city-section-sub {
+    font-size: 13px; color: var(--ink2); margin-top: 8px; line-height: 1.7;
+    max-width: 760px;
+  }
+
+  .city-grid {
     display: grid; grid-template-columns: 1fr 1fr;
-    overflow: hidden;
+    border-top: 1px solid var(--line);
   }
+  .city {
+    display: grid; grid-template-rows: 38% 1fr;
+    border-right: 1px solid var(--line);
+    background: var(--bg2);
+  }
+  .city:last-child { border-right: none; }
 
-  /* 各スポット：写真上 + 白テキスト下 */
-  .spot {
-    display: flex; flex-direction: column;
-    border-right: 1px solid var(--border);
-    overflow: hidden;
-  }
-  .spot:last-child { border-right: none; }
-
-  .spot-img-wrap {
-    height: 42%; overflow: hidden; position: relative; flex-shrink: 0;
-  }
-  .spot-img-wrap img {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: brightness(0.92);
-    transition: transform 0.6s ease;
-  }
-  .spot:hover .spot-img-wrap img { transform: scale(1.04); }
-  .spot-img-badge {
-    position: absolute; top: 14px; left: 14px;
+  .city-img { overflow: hidden; position: relative; }
+  .city-img img { width: 100%; height: 100%; object-fit: cover; }
+  .city-img-badge {
+    position: absolute; top: 16px; left: 16px;
     font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700;
-    letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--gold); background: rgba(255,255,255,0.9);
-    border-radius: 100px; padding: 4px 12px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    letter-spacing: 0.14em; color: var(--ink); background: rgba(255,255,255,0.92);
+    padding: 4px 10px; border-radius: 2px;
   }
 
-  .spot-info {
-    flex: 1; background: var(--bg2); padding: 20px 28px;
-    overflow: hidden; display: flex; flex-direction: column; gap: 8px;
+  .city-body {
+    padding: 32px 40px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .city-name {
+    font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900;
+    color: var(--ink); line-height: 1; display: flex; align-items: baseline; gap: 12px;
+  }
+  .city-name .yr {
+    font-family: 'Inter', sans-serif; font-weight: 400; color: var(--ink3); font-size: 13px;
+  }
+  .city-eras { display: flex; gap: 6px; }
+
+  .city-fact {
+    font-size: 13px; color: var(--ink); line-height: 1.85; font-weight: 400;
+  }
+  .city-fact b { font-weight: 700; }
+
+  .city-foot {
+    margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px;
+  }
+  .city-foot .place { color: var(--ink); font-weight: 700; }
+  .city-foot .fee {
+    font-family: 'Inter', sans-serif; color: var(--gold); font-weight: 700;
   }
 
-  .spot-name-lg {
-    font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900;
-    color: var(--ink); line-height: 1.1;
+  /* Oxford 2-layer */
+  .ox-layer {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .ox-layer:last-of-type { border-bottom: none; }
+  .ox-layer .h {
+    font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ox-layer .h .yr {
+    font-family: 'Inter', sans-serif; font-weight: 400; color: var(--ink3); font-size: 11px;
+  }
+  .ox-layer .t { font-size: 12px; color: var(--ink2); line-height: 1.75; }
+
+  /* Stratford big number */
+  .strat-num-wrap { text-align: left; }
+  .strat-num {
+    font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 900;
+    color: var(--gold); line-height: 0.9;
+  }
+  .strat-num-sub {
+    font-family: 'Inter', sans-serif; font-size: 11px; color: var(--ink3);
+    margin-top: 6px;
   }
 
-  .spot-theme-sm {
-    font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600;
-    color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase;
-  }
-
-  .spot-fact-box {
-    background: var(--acbg); border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0; padding: 10px 14px;
-    font-size: 12px; color: var(--ink); line-height: 1.7;
-  }
-
-  .spot-desc-sm { font-size: 11px; color: var(--ink2); line-height: 1.75; }
-
-  .spot-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: var(--goldbg); border: 1px solid rgba(217,119,6,0.25);
-    border-radius: 100px; padding: 5px 12px;
-    font-size: 10px; font-weight: 700; color: var(--gold);
-    align-self: flex-start; margin-top: auto;
-  }
-
-  /* ══════════════════════════════
-     SLIDE 5 — 費用
-  ══════════════════════════════ */
+  /* ══════════ SLIDE 5 ══════════ */
   #s5 {
-    background: var(--bg);
     display: grid; grid-template-columns: 1fr 1fr;
-    align-items: center; padding: 56px 72px;
-    gap: 80px;
+    padding: 88px 0; gap: 0;
   }
+  .s5-col { padding: 0 80px; }
+  .s5-col + .s5-col { border-left: 1px solid var(--line); }
 
-  .cost-heading {
-    font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 900;
-    color: var(--ink); margin-bottom: 32px;
+  .s5-title {
+    font-size: 28px; margin-bottom: 8px;
+  }
+  .s5-sub {
+    font-size: 12px; color: var(--ink3); margin-bottom: 32px; line-height: 1.7;
   }
 
   .cost-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 0; border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr auto;
+    padding: 14px 0; border-bottom: 1px solid var(--line2);
+    font-size: 13px;
   }
-  .cost-row:last-child { border-bottom: none; }
-  .cost-left { display: flex; align-items: center; gap: 12px; }
-  .cost-icon { font-size: 18px; }
-  .cost-name { font-size: 13px; color: var(--ink2); }
-  .cost-val { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--ink); }
-
-  .cost-right-panel { text-align: center; }
-
-  .total-label-sm {
-    font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700;
-    letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink3); margin-bottom: 10px;
+  .cost-row.total {
+    border-top: 1px solid var(--ink); border-bottom: none;
+    margin-top: 8px; padding-top: 16px;
+    font-weight: 700;
   }
-  .total-big {
-    font-family: 'Playfair Display', serif; font-size: 76px; font-weight: 900;
-    color: var(--gold); line-height: 1; margin-bottom: 4px;
+  .cost-row.total .cost-val { color: var(--gold); font-size: 18px; }
+  .cost-name { color: var(--ink2); }
+  .cost-val {
+    font-family: 'Inter', sans-serif; font-weight: 700; color: var(--ink);
+    white-space: nowrap;
   }
-  .total-sub-sm { font-size: 12px; color: var(--ink3); margin-bottom: 28px; }
 
-  .baito-card {
-    background: var(--goldbg); border: 1px solid rgba(217,119,6,0.25);
-    border-radius: 16px; padding: 20px 28px; margin-bottom: 16px;
+  .prep-row {
+    display: grid; grid-template-columns: 1fr auto;
+    padding: 16px 0; border-bottom: 1px solid var(--line2);
+    align-items: start;
   }
-  .baito-text { font-size: 13px; color: var(--gold); font-weight: 700; line-height: 1.9; }
-  .baito-big { font-size: 26px; display: block; color: var(--ink); }
-
-  .hostel-card {
-    background: var(--greenbg); border: 1px solid rgba(5,150,105,0.2);
-    border-radius: 16px; padding: 16px 24px;
+  .prep-row:last-child { border-bottom: none; }
+  .prep-name {
+    font-size: 13px; font-weight: 700; color: var(--ink);
   }
-  .hostel-text { font-size: 12px; color: var(--ink2); line-height: 1.8; }
-  .hostel-text strong { color: var(--green); }
+  .prep-desc {
+    font-size: 11px; color: var(--ink3); margin-top: 4px; line-height: 1.6;
+  }
+  .prep-tag {
+    font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); white-space: nowrap;
+  }
 
-  /* ══════════════════════════════
-     SLIDE 6 — クロージング
-  ══════════════════════════════ */
+  /* ══════════ SLIDE 6 ══════════ */
   #s6 {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 60px;
-    background: linear-gradient(135deg, #1a1830 0%, #2d1f48 50%, #1a2e40 100%);
+    background: #1a1830;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 88px 120px;
+    text-align: center;
   }
-  #s6 .bg-img { position: absolute; inset: 0; z-index: 0; }
-  #s6 .bg-img img {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: brightness(0.38) saturate(0.7);
+  .s6-eyebrow {
+    font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
   }
-  #s6 .bg-overlay {
-    position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(to bottom, rgba(26,24,48,0.3) 0%, rgba(26,24,48,0.5) 100%);
+  .s6-title {
+    font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900;
+    color: #fff; line-height: 1.2; margin-bottom: 24px; max-width: 800px;
   }
-  #s6 > *:not(.bg-img):not(.bg-overlay) { position: relative; z-index: 2; }
-
-  .close-title {
-    font-family: 'Playfair Display', serif; font-size: 66px; font-weight: 900;
-    color: #fff; line-height: 1.1; margin-bottom: 18px;
-  }
-  .close-title .gold { color: var(--goldbg); }
-
-  .close-lead {
-    font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.7);
-    line-height: 2; margin-bottom: 40px; max-width: 500px;
+  .s6-title .gold { color: #fbbf24; }
+  .s6-lead {
+    font-size: 14px; color: rgba(255,255,255,0.65);
+    line-height: 1.9; margin-bottom: 56px; max-width: 640px; font-weight: 300;
   }
 
-  .pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
-  .pill {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 100px; padding: 10px 22px;
-    font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.85);
-    backdrop-filter: blur(8px);
+  .takeaway-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 32px; max-width: 880px; width: 100%;
+    margin-bottom: 56px; text-align: left;
+  }
+  .ta-num {
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700;
+    color: #fbbf24; letter-spacing: 0.2em; margin-bottom: 12px;
+  }
+  .ta-h {
+    font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+    color: #fff; margin-bottom: 10px; line-height: 1.3;
+  }
+  .ta-t { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.75; }
+
+  .s6-thanks {
+    font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700;
+    color: #fff;
+  }
+  .s6-thanks .jp {
+    display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 11px;
+    font-weight: 300; color: rgba(255,255,255,0.45); margin-top: 8px;
+    letter-spacing: 0.05em;
   }
 
-  .cta-btn {
-    background: linear-gradient(135deg, var(--gold), #f59e0b);
-    border-radius: 14px; padding: 18px 48px;
-    font-size: 16px; font-weight: 700; color: #fff;
-    box-shadow: 0 16px 48px rgba(217,119,6,0.4);
-    display: inline-block;
-  }
-
-  /* ── アニメーション ── */
+  /* Animations */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(22px); }
+    from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  .slide.active .anim { animation: fadeUp 0.65s cubic-bezier(0.16,1,0.3,1) both; }
-  .slide.active .anim:nth-child(1) { animation-delay: 0.06s; }
-  .slide.active .anim:nth-child(2) { animation-delay: 0.14s; }
-  .slide.active .anim:nth-child(3) { animation-delay: 0.22s; }
-  .slide.active .anim:nth-child(4) { animation-delay: 0.30s; }
-  .slide.active .anim:nth-child(5) { animation-delay: 0.38s; }
+  .slide.active .anim { animation: fadeUp 0.55s cubic-bezier(0.16,1,0.3,1) both; }
+  .slide.active .anim:nth-child(1) { animation-delay: 0.05s; }
+  .slide.active .anim:nth-child(2) { animation-delay: 0.13s; }
+  .slide.active .anim:nth-child(3) { animation-delay: 0.21s; }
+  .slide.active .anim:nth-child(4) { animation-delay: 0.29s; }
+  .slide.active .anim:nth-child(5) { animation-delay: 0.37s; }
+  .slide.active .anim:nth-child(6) { animation-delay: 0.45s; }
+
+  @keyframes popPin {
+    0%   { opacity: 0; transform: scale(0.4); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .slide.active .pin { animation: popPin 0.55s ease-out both; transform-box: fill-box; transform-origin: center; }
+  .slide.active .pin.p1 { animation-delay: 0.30s; }
+  .slide.active .pin.p2 { animation-delay: 0.45s; }
+  .slide.active .pin.p3 { animation-delay: 0.60s; }
+  .slide.active .pin.p4 { animation-delay: 0.75s; }
+  .slide.active .pin.p5 { animation-delay: 0.90s; }
 </style>
 </head>
 <body>
@@ -397,146 +434,228 @@
 
 <!-- ══════════ SLIDE 1 ══════════ -->
 <section class="slide active" id="s1">
-  <div class="s1-photo">
-    <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=900&q=80"
-         onerror="this.style.background='linear-gradient(135deg,#c8a97e,#7a6245)'"
-         alt="London">
-    <div class="s1-photo-label">📍 London, England</div>
+  <div class="s1-left">
+    <svg viewBox="0 0 360 480" xmlns="http://www.w3.org/2000/svg" aria-label="UK map">
+      <!-- Great Britain silhouette -->
+      <path d="M178 24 C 195 24 208 35 212 50 C 215 65 210 78 215 92
+               C 222 110 240 118 245 138 C 248 156 240 170 248 188
+               C 256 206 274 215 270 234 C 266 252 250 258 258 278
+               C 266 298 282 308 278 328 C 274 348 254 354 248 372
+               C 242 390 252 408 240 422 C 228 436 200 438 184 446
+               C 168 454 152 458 140 450 C 128 442 130 426 118 416
+               C 106 406 86 408 80 392 C 74 376 86 362 80 346
+               C 74 330 56 326 58 308 C 60 290 76 286 76 268
+               C 76 250 60 244 64 226 C 68 208 86 206 90 188
+               C 94 170 80 158 88 142 C 96 126 116 126 124 112
+               C 132 98 128 80 140 66 C 152 52 162 24 178 24 Z"
+            fill="#dfd8c4" stroke="#bcb09a" stroke-width="1.2" stroke-linejoin="round" />
+      <!-- Route line -->
+      <path d="M 220 386 L 254 396 L 180 188 L 192 358 L 168 320 L 220 386"
+            stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="3 4" fill="none" opacity="0.6" />
+      <!-- London (base) -->
+      <g class="pin p5">
+        <circle cx="220" cy="386" r="5" fill="#1a1830" />
+        <text x="232" y="390" font-family="Inter" font-size="11" font-weight="700" fill="#1a1830">London</text>
+      </g>
+      <!-- 1. Canterbury -->
+      <g class="pin p1">
+        <circle cx="254" cy="396" r="9" fill="#7c3aed" />
+        <text x="254" y="400" font-family="Inter" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+        <text x="268" y="400" font-family="Inter" font-size="11" font-weight="700" fill="#1a1830">Canterbury</text>
+      </g>
+      <!-- 2. York -->
+      <g class="pin p2">
+        <circle cx="180" cy="188" r="9" fill="#1e40af" />
+        <text x="180" y="192" font-family="Inter" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+        <text x="194" y="192" font-family="Inter" font-size="11" font-weight="700" fill="#1a1830">York</text>
+      </g>
+      <!-- 3. Oxford -->
+      <g class="pin p3">
+        <circle cx="192" cy="358" r="9" fill="#0d9488" />
+        <text x="192" y="362" font-family="Inter" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+        <text x="178" y="362" font-family="Inter" font-size="11" font-weight="700" fill="#1a1830" text-anchor="end">Oxford</text>
+      </g>
+      <!-- 4. Stratford -->
+      <g class="pin p4">
+        <circle cx="168" cy="320" r="9" fill="#b45309" />
+        <text x="168" y="324" font-family="Inter" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+        <text x="154" y="324" font-family="Inter" font-size="11" font-weight="700" fill="#1a1830" text-anchor="end">Stratford</text>
+      </g>
+    </svg>
   </div>
-  <div class="s1-content">
-    <div class="eyebrow anim">英語史ツアー企画 2025</div>
-    <div class="s1-title anim">英語が<br>生まれた<br><span class="gold">5日間</span></div>
-    <div class="anim" style="display:flex;flex-direction:column;gap:4px;margin-bottom:18px;padding:12px 16px;background:rgba(0,0,0,0.04);border-radius:10px;border:1px solid var(--border);">
-      <div style="font-size:9px;font-family:'Inter',sans-serif;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px;">Presented by</div>
-      <div style="font-size:13px;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;"><span>山崎　徳</span><span style="font-family:'Inter',sans-serif;color:var(--ink3);font-weight:400;font-size:11px;">２４６１０１９２</span></div>
-      <div style="font-size:13px;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;"><span>増田　喜駈人</span><span style="font-family:'Inter',sans-serif;color:var(--ink3);font-weight:400;font-size:11px;">２４３１０１３１</span></div>
+
+  <div class="s1-right">
+    <div class="eyebrow anim">英語史プレゼンテーション</div>
+    <div class="h1 s1-h1 anim">A Journey Through<br>the <span class="gold">History of English</span></div>
+    <div class="s1-sub anim">英語史を歩く5都市 × <span style="color:var(--gold);font-weight:700;">⚡ ハリーポッター聖地巡り</span><br>時代の地図として読むイングランド</div>
+
+    <div class="s1-meta anim">
+      <div><div class="label">Presenters</div><div class="val">山崎 徳 <span style="font-family:'Inter',sans-serif;font-weight:400;color:var(--ink3);font-size:11px;">24610192</span> ・ 増田 喜駈人 <span style="font-family:'Inter',sans-serif;font-weight:400;color:var(--ink3);font-size:11px;">24310131</span></div></div>
+      <div><div class="label">Duration</div><div class="val">4 nights / 5 days</div></div>
+      <div><div class="label">Budget</div><div class="val">¥185k–250k</div></div>
     </div>
-    <div class="s1-sub anim">知ってる英単語のルーツを<br>現地で発見する旅</div>
-    <div class="s1-stats anim">
-      <div><div class="stat-num">4泊</div><div class="stat-label">5日間</div></div>
-      <div><div class="stat-num">4</div><div class="stat-label">スポット</div></div>
-      <div><div class="stat-num">¥13万</div><div class="stat-label">円 / 1人</div></div>
-      <div style="border-left:2px solid var(--border);padding-left:22px;">
-        <div class="stat-num" style="font-size:18px;">⚡ 5</div>
-        <div class="stat-label">ハリポタ聖地</div>
-      </div>
-    </div>
-    <div class="route-card anim">
-      <div class="route-card-title">📍 ルート</div>
-      <div class="route-row"><span class="route-day">DAY1</span><span class="route-dot" style="background:#d97706"></span><span class="route-place">ロンドン着</span><span class="route-note">⚡ 9¾番線・ダイアゴン横丁</span></div>
-      <div class="route-row"><span class="route-day">DAY2</span><span class="route-dot"></span><span class="route-place">ヨーク</span><span class="route-note">⚡ アルニック城（箒乗り）</span></div>
-      <div class="route-row"><span class="route-day">DAY3</span><span class="route-dot"></span><span class="route-place">カンタベリー</span><span class="route-note">古英語</span></div>
-      <div class="route-row"><span class="route-day">DAY4</span><span class="route-dot"></span><span class="route-place">オックスフォード</span><span class="route-note">⚡ ホグワーツの聖地</span></div>
-      <div class="route-row"><span class="route-day">DAY5</span><span class="route-dot" style="background:#059669"></span><span class="route-place">ストラトフォード→帰国</span><span class="route-note">Shakespeare</span></div>
+
+    <div class="s1-route anim">
+      <div class="row"><span class="num">00</span><span class="dot" style="background:#1a1830;"></span><span class="place">London <span style="font-family:'Inter',sans-serif;font-weight:400;color:var(--ink3);font-size:11px;">D1 / D5</span></span><span class="era" style="color:var(--gold);">⚡ 9¾番線 ・ Diagon Alley</span></div>
+      <div class="row r1"><span class="num">01</span><span class="dot"></span><span class="place">Canterbury</span><span class="era">597 / Old English</span></div>
+      <div class="row r2"><span class="num">02</span><span class="dot"></span><span class="place">York</span><span class="era">866 / Old Norse <span style="color:var(--gold);">⚡</span></span></div>
+      <div class="row r3"><span class="num">03</span><span class="dot"></span><span class="place">Oxford</span><span class="era">1096–1928 / Middle → Modern <span style="color:var(--gold);">⚡⚡⚡</span></span></div>
+      <div class="row r4"><span class="num">04</span><span class="dot"></span><span class="place">Stratford-upon-Avon</span><span class="era">16c / Early Modern</span></div>
     </div>
   </div>
 </section>
 
 <!-- ══════════ SLIDE 2 ══════════ -->
 <section class="slide" id="s2">
-  <div class="h-tag anim">ちょっと聞いていいですか？</div>
-  <div class="big-q anim">この英単語、<br>どこで生まれたか知ってる？</div>
-  <div class="quiz-box anim">
-    <div class="quiz-label">例えば…</div>
-    <div class="quiz-word">"egg"</div>
-    <div class="quiz-ans">→ 実はヴァイキング語。9世紀にイギリスを侵攻した<br>ノルウェー人が持ち込んだ言葉。</div>
+  <div class="eyebrow anim">Q1 ・ 導入クイズ</div>
+  <div class="h1 s2-title anim">"egg" は、いつ英語に入ったか。</div>
+
+  <div class="tl anim">
+    <div class="tl-bar">
+      <div class="seg s1"></div><div class="seg s2"></div><div class="seg s3"></div><div class="seg s4"></div>
+    </div>
+    <div class="tl-labels">
+      <div><div class="y">Old English</div><div class="n">449 – 1100</div></div>
+      <div><div class="y">Middle English</div><div class="n">1100 – 1500</div></div>
+      <div><div class="y">Early Modern</div><div class="n">1500 – 1700</div></div>
+      <div><div class="y">Modern English</div><div class="n">1700 –</div></div>
+    </div>
   </div>
-  <div class="word-chips anim">
-    <div class="chip">sky → ノルド語</div>
-    <div class="chip">knife → ヴァイキング語</div>
-    <div class="chip">bedroom → シェイクスピアが発明</div>
-    <div class="chip">beef → フランス語</div>
-    <div class="chip">window → ノルド語</div>
+
+  <div class="s2-quiz anim">
+    <div class="quiz-word">egg</div>
+    <div>
+      <div class="quiz-q">Answer</div>
+      <div class="quiz-ans">
+        <b>古ノルド語 (Old Norse) 由来。</b><br>
+        9〜11 世紀のデーンロー期、<br>
+        ヴァイキングが古英語の <i>æg</i> に置き換えた。
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ══════════ SLIDE 3 ══════════ -->
-<section class="slide" id="s3">
-  <div class="spots-header">
-    <div class="spots-section-label">Day 2 &amp; Day 3</div>
-    <div class="spots-section-title">英語の「ルーツ」を見に行く</div>
+<section class="slide city-pair" id="s3">
+  <div class="city-header">
+    <div class="city-section-eyebrow">Day 2 &amp; Day 3</div>
+    <div class="city-section-title">古英語の幕開けと、古ノルド語の衝突</div>
+    <div class="city-section-sub">597 年のキリスト教化と、9 世紀のヴァイキング侵入。<br>古英語期の二大事件を、二つの都市で辿る。</div>
   </div>
-  <div class="spots-grid">
-    <!-- ヨーク -->
-    <div class="spot">
-      <div class="spot-img-wrap">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/York_Minster_from_the_city_walls.jpg/1280px-York_Minster_from_the_city_walls.jpg"
-             onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80'"
-             alt="York Minster">
-        <div class="spot-img-badge">DAY 2</div>
+  <div class="city-grid">
+    <!-- Canterbury -->
+    <div class="city">
+      <div class="city-img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Canterbury_Cathedral_-_Portal_Nave_Cross-spire.jpeg/800px-Canterbury_Cathedral_-_Portal_Nave_Cross-spire.jpeg"
+             onerror="this.src='https://images.unsplash.com/photo-1570458436416-b8fcccfe883f?w=900&q=80'"
+             alt="Canterbury Cathedral">
+        <div class="city-img-badge">01 ・ Day 2</div>
       </div>
-      <div class="spot-info">
-        <div class="spot-name-lg">ヨーク</div>
-        <div class="spot-theme-sm">Viking × Norse Language</div>
-        <div class="spot-fact-box">「egg」「sky」「knife」はここから来た。<br>ヴァイキングの侵攻でノルド語が英語に混入した場所。</div>
-        <div class="spot-desc-sm">ヨルヴィク・バイキングセンターで1000年前の街を体感。教科書で読んだ歴史が目の前に広がる。</div>
-        <div style="background:#fffbeb;border:1px solid rgba(217,119,6,0.3);border-radius:10px;padding:8px 14px;font-size:11px;color:#92400e;margin-top:4px;">
-          ⚡ <strong>ハリポタ聖地</strong>：ここから電車1.5時間で<strong>アルニック城</strong>（箒乗り練習シーンのロケ地）に行ける。
+      <div class="city-body">
+        <div class="city-name">Canterbury<span class="yr">597 –</span></div>
+        <div class="city-eras"><span class="echip oe">Old English</span><span class="echip me">Middle English</span></div>
+        <div class="city-fact">
+          <b>聖アウグスティヌス上陸</b>でキリスト教化が始まり、ラテン文字が英語に導入された地。
+          一方、チョーサー『カンタベリー物語』(1387) は<b>中英語</b>の代表作 ――
+          二つの時代が重なる都市。
         </div>
-        <div class="spot-badge">🏰 ヨルヴィク・バイキングセンター</div>
+        <div class="city-foot">
+          <span class="place">Canterbury Cathedral</span>
+          <span class="fee">£19</span>
+        </div>
       </div>
     </div>
-    <!-- カンタベリー -->
-    <div class="spot">
-      <div class="spot-img-wrap">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Canterbury_Cathedral_-_Portal_Nave_Cross-spire.jpeg/800px-Canterbury_Cathedral_-_Portal_Nave_Cross-spire.jpeg"
-             onerror="this.src='https://images.unsplash.com/photo-1570458436416-b8fcccfe883f?w=800&q=80'"
-             alt="Canterbury Cathedral">
-        <div class="spot-img-badge">DAY 3</div>
+
+    <!-- York -->
+    <div class="city">
+      <div class="city-img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/York_Minster_from_the_city_walls.jpg/1280px-York_Minster_from_the_city_walls.jpg"
+             onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80'"
+             alt="York Minster">
+        <div class="city-img-badge">02 ・ Day 3</div>
       </div>
-      <div class="spot-info">
-        <div class="spot-name-lg">カンタベリー</div>
-        <div class="spot-theme-sm">Old English × Anglo-Saxon</div>
-        <div class="spot-fact-box">チョーサー『カンタベリー物語』の舞台。<br>古英語が「生きていた」場所を歩く。</div>
-        <div class="spot-desc-sm">世界遺産のカンタベリー大聖堂。英語の授業で何度も聞いた「カンタベリー」が目の前に。写真映えも最高。</div>
-        <div class="spot-badge">⛪ カンタベリー大聖堂（世界遺産）</div>
+      <div class="city-body">
+        <div class="city-name">York<span class="yr">866 –</span></div>
+        <div class="city-eras"><span class="echip on">Old Norse</span><span class="echip en">⚡ HP</span></div>
+        <div class="city-fact">
+          ヴァイキングが占領し、<b>デーンロー (Danelaw)</b> の首都に。
+          古ノルド語との接触から <b>they / sky / window / knife / egg</b> が英語に流入した。
+        </div>
+        <div style="font-size:11px;color:#92400e;background:#fffbeb;border-left:2px solid var(--gold);padding:8px 12px;line-height:1.65;">
+          <b>⚡ HP聖地：</b>電車 1.5 h で <b>Alnwick Castle</b>（箒乗り訓練シーン）へ拡張可能。
+        </div>
+        <div class="city-foot">
+          <span class="place">JORVIK Viking Centre</span>
+          <span class="fee">£15</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ══════════ SLIDE 4 ══════════ -->
-<section class="slide" id="s4">
-  <div class="spots-header">
-    <div class="spots-section-label">Day 4 &amp; Day 5</div>
-    <div class="spots-section-title">英語が「完成」していく場所</div>
+<section class="slide city-pair" id="s4">
+  <div class="city-header">
+    <div class="city-section-eyebrow">Day 4 &amp; Day 5</div>
+    <div class="city-section-title">標準化と、語彙の爆発</div>
+    <div class="city-section-sub">中世の学術都市から近代の辞典編纂へ、そして初期近代英語を形作った劇作家へ。</div>
   </div>
-  <div class="spots-grid">
-    <!-- オックスフォード -->
-    <div class="spot">
-      <div class="spot-img-wrap">
+  <div class="city-grid">
+    <!-- Oxford -->
+    <div class="city">
+      <div class="city-img">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Bodleian_Library_Radcliffe_Camera_trimmed.jpg/1280px-Bodleian_Library_Radcliffe_Camera_trimmed.jpg"
-             onerror="this.src='https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=800&q=80'"
+             onerror="this.src='https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=900&q=80'"
              alt="Oxford">
-        <div class="spot-img-badge">DAY 4</div>
+        <div class="city-img-badge">03 ・ Day 4</div>
       </div>
-      <div class="spot-info">
-        <div class="spot-name-lg">オックスフォード</div>
-        <div class="spot-theme-sm">Middle English × OED</div>
-        <div class="spot-fact-box">オックスフォード英語辞典（OED）が生まれた場所。<br>英語の「標準化」が起きた聖地。</div>
-        <div style="background:#fffbeb;border:1px solid rgba(217,119,6,0.3);border-radius:10px;padding:10px 14px;font-size:11px;color:#92400e;line-height:1.8;">
-          ⚡ <strong>ハリポタ聖地3連発</strong><br>
-          📚 ボドリアン図書館 → ホグワーツ図書室<br>
-          🏛 クライストチャーチ → 大広間のモデル<br>
-          🌿 ニューカレッジ → マルフォイの温室
+      <div class="city-body">
+        <div class="city-name">Oxford</div>
+        <div>
+          <div class="ox-layer">
+            <div class="h"><span class="echip me">Middle</span>Medieval Oxford<span class="yr">1096 –</span></div>
+            <div class="t">英語圏最古の大学。中世はラテン語が学術言語で、英語は周縁にあった。</div>
+          </div>
+          <div class="ox-layer">
+            <div class="h"><span class="echip en">Modern</span>The OED<span class="yr">1884 – 1928</span></div>
+            <div class="t"><b>OED は近代英語期の編纂物</b>。中英語の辞書ではない。James Murray らが初版 12 巻・約 41 万語を完成。</div>
+          </div>
         </div>
-        <div class="spot-badge">⚡ ハリポタ聖地が3カ所ある唯一の街</div>
+        <div style="font-size:11px;color:#92400e;background:#fffbeb;border-left:2px solid var(--gold);padding:8px 12px;line-height:1.65;">
+          <b>⚡ HP聖地 3 か所：</b>Bodleian（図書室）／ Christ Church（大広間）／ New College（中庭）
+        </div>
+        <div class="city-foot">
+          <span class="place">Bodleian Library Tour</span>
+          <span class="fee">£20</span>
+        </div>
       </div>
     </div>
-    <!-- ストラトフォード -->
-    <div class="spot">
-      <div class="spot-img-wrap">
+
+    <!-- Stratford -->
+    <div class="city">
+      <div class="city-img">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Shakespeare_Birthplace_Trust_Stratford-upon-Avon.jpg"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?w=800&q=80';this.onerror=function(){this.style.display='none';this.parentElement.style.background='linear-gradient(160deg,#8B6347 0%,#5C3D2E 60%,#2d1a0a 100%)';}"
-             alt="Shakespeare Birthplace Stratford-upon-Avon">
-        <div class="spot-img-badge">DAY 5</div>
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?w=900&q=80'"
+             alt="Shakespeare's Birthplace">
+        <div class="city-img-badge">04 ・ Day 5</div>
       </div>
-      <div class="spot-info">
-        <div class="spot-name-lg">ストラトフォード</div>
-        <div class="spot-theme-sm">Shakespeare × Modern English</div>
-        <div class="spot-fact-box">シェイクスピアが作った英単語は1,700語以上。<br>"bedroom" "lonely" "eyeball" も彼の発明。</div>
-        <div class="spot-desc-sm">シェイクスピアの生家がある街。現代英語の土台を作った人物が実際に生きた場所。帰りにロンドンのグローブ座にも立ち寄れる。</div>
-        <div class="spot-badge">🎭 シェイクスピアの生家</div>
+      <div class="city-body">
+        <div class="city-name">Stratford-upon-Avon<span class="yr">16c</span></div>
+        <div class="city-eras"><span class="echip en">Early Modern English</span></div>
+
+        <div class="strat-num-wrap">
+          <div class="strat-num">≈ 1,700</div>
+          <div class="strat-num-sub">words first attested in Shakespeare — OED first-citation basis</div>
+        </div>
+
+        <div class="city-fact" style="font-size:12px;">
+          ただし、<b>全てが彼の発明ではない</b>。<i>bedroom</i> には 1580 年代の先行用例があり、
+          「発明した」ではなく「<b>広めた</b>」が正確。
+        </div>
+        <div class="city-foot">
+          <span class="place">Shakespeare's Birthplace</span>
+          <span class="fee">£23</span>
+        </div>
       </div>
     </div>
   </div>
@@ -544,33 +663,42 @@
 
 <!-- ══════════ SLIDE 5 ══════════ -->
 <section class="slide" id="s5">
-  <div>
-    <div class="eyebrow anim" style="margin-bottom:10px;">学生価格でここまで行ける</div>
-    <div class="cost-heading anim">費用内訳</div>
+  <div class="s5-col">
+    <div class="eyebrow anim">実費</div>
+    <div class="h1 s5-title anim">いくらで行けるか。</div>
+    <div class="s5-sub anim">早期予約・閑散期・LCC 直行便・ユース系宿泊を前提。</div>
+
     <div class="anim">
-      <div class="cost-row"><div class="cost-left"><div class="cost-icon">✈️</div><div class="cost-name">往復航空券（LCC・早期予約）</div></div><div class="cost-val">¥80,000</div></div>
-      <div class="cost-row"><div class="cost-left"><div class="cost-icon">🏨</div><div class="cost-name">ユースホステル × 4泊</div></div><div class="cost-val">¥12,000</div></div>
-      <div class="cost-row"><div class="cost-left"><div class="cost-icon">🚂</div><div class="cost-name">国内移動（電車・バス）</div></div><div class="cost-val">¥20,000</div></div>
-      <div class="cost-row"><div class="cost-left"><div class="cost-icon">🍺</div><div class="cost-name">食費（5日分）</div></div><div class="cost-val">¥12,000</div></div>
-      <div class="cost-row"><div class="cost-left"><div class="cost-icon">🎟️</div><div class="cost-name">入場料合計</div></div><div class="cost-val">¥6,000</div></div>
+      <div class="cost-row"><span class="cost-name">航空券（LCC 往復）</span><span class="cost-val">¥120k – 170k</span></div>
+      <div class="cost-row"><span class="cost-name">宿泊 ユース × 4 泊</span><span class="cost-val">¥12k – 16k</span></div>
+      <div class="cost-row"><span class="cost-name">国内移動 鉄道 / バス</span><span class="cost-val">¥20k – 25k</span></div>
+      <div class="cost-row"><span class="cost-name">食費 5 日分</span><span class="cost-val">¥18k – 25k</span></div>
+      <div class="cost-row"><span class="cost-name">入場料 4 か所</span><span class="cost-val">¥15k</span></div>
+      <div class="cost-row total"><span class="cost-name">合計</span><span class="cost-val">¥185k – 250k</span></div>
     </div>
   </div>
-  <div class="cost-right-panel anim">
-    <div class="total-label-sm">1人あたり合計</div>
-    <div class="total-big">¥130,000</div>
-    <div class="total-sub-sm">約13万円</div>
-    <div class="baito-card">
-      <div class="baito-text">
-        時給1,100円のバイトで<br>
-        <span class="baito-big">約118時間</span>
-        ≒ バイト3ヶ月で行ける
+
+  <div class="s5-col">
+    <div class="eyebrow anim">準備</div>
+    <div class="h1 s5-title anim">渡英前に必要なもの。</div>
+    <div class="s5-sub anim">2025 年以降は ETA が必須化された。書類不備で搭乗拒否の例も。</div>
+
+    <div class="anim">
+      <div class="prep-row">
+        <div><div class="prep-name">パスポート</div><div class="prep-desc">残存有効期間 6 か月以上を推奨</div></div>
+        <span class="prep-tag">必須</span>
       </div>
-    </div>
-    <div class="hostel-card">
-      <div class="hostel-text">
-        ユースホステルは<strong>1泊2,000〜3,500円</strong>。<br>
-        世界中の旅行者と出会える。<br>
-        <strong>英語を使う機会</strong>が自然に生まれる。
+      <div class="prep-row">
+        <div><div class="prep-name">ETA</div><div class="prep-desc">UK Electronic Travel Authorisation / £10 / オンライン申請</div></div>
+        <span class="prep-tag">必須</span>
+      </div>
+      <div class="prep-row">
+        <div><div class="prep-name">海外旅行保険</div><div class="prep-desc">クレカ付帯では不足。医療費高額のため別途加入を推奨</div></div>
+        <span class="prep-tag">必須</span>
+      </div>
+      <div class="prep-row">
+        <div><div class="prep-name">16-25 Railcard</div><div class="prep-desc">£35 / 1 年、英国鉄道 1/3 OFF</div></div>
+        <span class="prep-tag">推奨</span>
       </div>
     </div>
   </div>
@@ -578,35 +706,48 @@
 
 <!-- ══════════ SLIDE 6 ══════════ -->
 <section class="slide" id="s6">
-  <div style="position:relative;z-index:2;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:6px 18px;border-radius:100px;margin-bottom:24px;font-family:'Inter',sans-serif;">まとめ</div>
-  <div class="close-title" style="position:relative;z-index:2;">この旅で、<br>英語が<span class="gold">変わる</span></div>
-  <div class="close-lead" style="position:relative;z-index:2;">
-    教科書の中にしかなかった言葉が、<br>
-    突然、リアルになる瞬間がある。<br>
-    それがこのツアーの本当の価値だ。
+  <div class="s6-eyebrow anim">Conclusion</div>
+  <div class="s6-title anim">英語は、<span class="gold">層</span>として見える。</div>
+  <div class="s6-lead anim">
+    5 世紀の渡来、9 世紀の侵入、11 世紀の征服、16 世紀の創造、19 世紀の編纂 ――<br>
+    その積層が、現代英語をなしている。
   </div>
-  <div class="pills" style="position:relative;z-index:2;">
-    <div class="pill">🏴󠁧󠁢󠁥󠁮󠁧󠁿 ヨーク → "egg"の故郷</div>
-    <div class="pill">⛪ カンタベリー → 古英語の聖地</div>
-    <div class="pill">📚 オックスフォード → 英語辞典誕生の地</div>
-    <div class="pill">🎭 ストラトフォード → Shakespeare の街</div>
-    <div class="pill" style="background:rgba(245,158,11,0.2);border-color:rgba(245,158,11,0.4);color:#fef3c7;">⚡ ハリポタ聖地 5カ所を同時制覇</div>
+
+  <div class="takeaway-grid anim">
+    <div>
+      <div class="ta-num">01</div>
+      <div class="ta-h">接触言語としての英語</div>
+      <div class="ta-t">古英語 ＋ 古ノルド語 ＋ ノルマン仏語 ＋ ラテン語の層が重なって生まれた。</div>
+    </div>
+    <div>
+      <div class="ta-num">02</div>
+      <div class="ta-h">都市は時代の地層</div>
+      <div class="ta-t">Canterbury (597) ／ York (9c) ／ Oxford (1096–) ／ Stratford (16c) ―― 別々の時代に属する。</div>
+    </div>
+    <div>
+      <div class="ta-num">03</div>
+      <div class="ta-h">標準化は近代の産物</div>
+      <div class="ta-t">大母音推移、印刷術、Johnson 辞書、OED ―― これらを経て現代英語が確立した。</div>
+    </div>
   </div>
-  <div class="cta-btn" style="position:relative;z-index:2;margin-top:8px;">4泊5日 × 約13万円 × 英語の歴史1500年</div>
+
+  <div class="s6-thanks anim">
+    Thank you.
+    <span class="jp">ご清聴ありがとうございました。</span>
+  </div>
 </section>
 
 </div>
 
 <div class="progress" id="progress"></div>
-<button class="nav-btn prev" onclick="go(-1)">←</button>
-<button class="nav-btn next" onclick="go(1)">→</button>
+<button class="nav-btn prev" onclick="go(-1)" aria-label="Previous slide">←</button>
+<button class="nav-btn next" onclick="go(1)" aria-label="Next slide">→</button>
 <div class="slide-num" id="slideNum"></div>
 
 <script>
   const slides = document.querySelectorAll('.slide');
   const total  = slides.length;
   let cur = 0;
-
   const progressEl = document.getElementById('progress');
   const slideNumEl = document.getElementById('slideNum');
 
@@ -620,21 +761,19 @@
   function update() {
     slides.forEach((s, i) => {
       s.classList.remove('active', 'exit');
-      if (i === cur)      s.classList.add('active');
-      else if (i < cur)   s.classList.add('exit');
+      if (i === cur)    s.classList.add('active');
+      else if (i < cur) s.classList.add('exit');
     });
     document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
-    slideNumEl.textContent = `${cur + 1} / ${total}`;
+    slideNumEl.textContent = `${String(cur + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
   }
-
-  function go(dir)  { cur = Math.max(0, Math.min(total - 1, cur + dir)); update(); }
-  function goTo(i)  { cur = i; update(); }
+  function go(dir) { cur = Math.max(0, Math.min(total - 1, cur + dir)); update(); }
+  function goTo(i) { cur = i; update(); }
 
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') go(1);
     if (e.key === 'ArrowLeft')  go(-1);
   });
-
   update();
 </script>
 </body>
